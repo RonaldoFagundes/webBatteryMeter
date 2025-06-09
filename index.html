@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"
+      integrity="sha512-MpDFIChbcXl2QgipQrt1VcPHMldRILetapBl5MPCA9Y8r7qvlwx1/Mc9hNTzY+kS5kX6PdoDq41ws1HiVNLdZA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+      </script>
+
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+   <script src="script.js" defer></script>
+
+   <style>
+
+       #header{        
+         text-align: center;
+         background-color: #45498d;
+         padding: 20px;
+         margin-bottom: 20px;
+       }
+
+
+       #header h1{
+          color: antiquewhite;
+       }
+
+
+
+       
+      #container-btn {
+         height: auto;         
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         align-items: center;
+         background-color: #9a9bb8;
+         padding: 20px;
+         margin-bottom: 20px;
+      }
+
+
+      /*
+      #content-btn {
+         width: auto;
+         height: auto;
+         
+         display: flex;
+         flex-direction: row;
+         background-color: #eaeaf5;
+         justify-content: space-between;
+        
+        
+         padding: 5px;
+         border-radius: 8px;
+
+         background-color: #790606;
+      }
+      */
+
+      input,a{        
+         padding: 10px;
+         border: 2px solid #177283;
+         border-radius: 8px;
+         background-color: #d1c8f3;
+         color: #14121b;
+         cursor: pointer;
+         text-decoration: none;
+      }
+
+     /*
+      a{
+         padding: 10px;
+         border: 2px solid #177283;
+         border-radius: 8px;
+         background-color: #d1c8f3;
+         color: #14121b;
+         text-decoration: none;
+      }
+     */
+
+
+     #content-alert, #surch-report{
+         display: flex;
+         flex-direction: row;
+         justify-content: space-around;
+         background-color: #52536d;
+         padding: 20px;
+     }
+
+
+
+      #container-list{
+        height: auto;
+        padding-bottom: 140px;
+
+      }
+
+
+
+      #container-report{
+         height: auto;
+         /*
+         display: block;
+         flex-direction: row;
+         justify-content: space-between;
+         background-color: #e7e7f7;
+         */
+         padding-bottom: 140px;
+         
+      }
+
+
+      #content-list {
+         display: flex;
+         flex-direction: row;
+         justify-content: space-around;
+         background-color: #52536d;
+         padding: 20px;
+      }
+
+
+
+      #title-list, #title-report {
+         text-align: center;       
+         color: antiquewhite;
+         font-size: 1.2rem;
+      }
+
+
+
+      #container-table {
+         display: flex;
+         flex-direction: column;
+         padding: 10px;
+         margin-bottom: 20px;
+      }
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+      #footer{
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         background-color: #9a9bb8;
+         padding: 20px
+      }
+
+
+   </style>
+
+
+
+</head>
+
+<body>
+
+
+
+
+  <div id="header">
+       <h1>I9+ Baterias</h1>
+  </div>
+
+
+
+
+
+
+
+   <div id="container-btn">
+          
+            <input type="button" value="List" id="list">              
+                     
+            <a href="#container-report">Relatórios</a>           
+
+   </div>
+
+
+
+
+
+
+
+   <div id="container-list">
+
+
+      <div id="content-list">
+
+
+         <div> 
+            <p id="title-list"></p>
+         </div>
+
+         <div>        
+            <input type="button" value="graph" id="graph">         
+         </div>
+
+         <div>            
+             <input type="button" value="pdf" id="pdf">            
+         </div>
+
+      </div>
+
+
+
+
+      <div id="content-alert">
+            
+            <p id="p-atention"></p>
+            <p id="p-critical"></p>
+
+      </div>
+
+
+
+
+
+      <div id="container-table">
+
+         <table id="table-list" border="1px" cellpadding="5px" cellspacing="0">
+
+            <thead>
+
+               <tr id="t-head">
+
+                  <th>id</th>
+                  <th>Tensão</th>
+                  <th>Condutância</th>
+                  <th>Desvio</th>
+                  <th>Obs</th>
+
+               </tr>
+
+            </thead>
+
+         </table>
+
+      </div>
+
+
+      <div>
+         <canvas id="myChart"></canvas>
+      </div>
+
+
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div id="container-report">
+
+
+   <div id="content-list">
+
+
+        <div> 
+            <p id="title-report"></p>
+         </div>
+
+
+         <div>            
+             <input type="button" value="report" id="report">            
+         </div>           
+                
+
+         <div>            
+             <input type="button" value="pdf-report" id="pdf-report">            
+         </div>
+
+
+      </div>
+
+
+
+      <div id="surch-report" >
+               
+              <select>List Battery</select>
+
+              <input type="button" value="surch-last" id="surch-last"> 
+
+              <input type="button" value="surch-bigger" id="surch-bigger"> 
+                  
+              <input type="text"  value="surch-ref">
+           
+
+      </div>
+
+
+
+
+      <div id="container-table">
+
+         <table id="table-report" border="1px" cellpadding="5px" cellspacing="0">
+
+            <thead>
+
+               <tr id="t-head">
+
+                  <th>id</th>
+                  <th>Tensão</th>
+                  <th>Corrente</th>
+                  <th>Temperatura</th>
+                  <th>Obs</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>fk</th>
+
+               </tr>
+
+            </thead>
+
+         </table>
+
+      </div>
+
+
+   </div>
+
+
+
+
+ 
+
+
+
+
+
+
+ <div id="footer">
+     <h2>footer</h2>
+ </div>
+
+
+
+
+
+
+
+
+</body>
+
+</html>

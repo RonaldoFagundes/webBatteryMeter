@@ -1,0 +1,143 @@
+ #header{        
+         text-align: center;
+         background-color: #45498d;
+         padding: 20px;
+         margin-bottom: 20px;
+       }
+
+
+       #header h1{
+          color: antiquewhite;
+       }
+
+
+
+       
+      #container-btn {
+         height: auto;         
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         align-items: center;
+         background-color: #9a9bb8;
+         padding: 20px;
+         margin-bottom: 20px;
+      }
+
+
+      /*
+      #content-btn {
+         width: auto;
+         height: auto;
+         
+         display: flex;
+         flex-direction: row;
+         background-color: #eaeaf5;
+         justify-content: space-between;
+        
+        
+         padding: 5px;
+         border-radius: 8px;
+
+         background-color: #790606;
+      }
+      */
+
+      input,a{        
+         padding: 10px;
+         border: 2px solid #177283;
+         border-radius: 8px;
+         background-color: #d1c8f3;
+         color: #14121b;
+         cursor: pointer;
+         text-decoration: none;
+      }
+
+     /*
+      a{
+         padding: 10px;
+         border: 2px solid #177283;
+         border-radius: 8px;
+         background-color: #d1c8f3;
+         color: #14121b;
+         text-decoration: none;
+      }
+     */
+
+
+     #content-alert, #surch-report{
+         display: flex;
+         flex-direction: row;
+         justify-content: space-around;
+         background-color: #52536d;
+         padding: 20px;
+     }
+
+
+
+      #container-list{
+        height: auto;
+        padding-bottom: 140px;
+
+      }
+
+
+
+      #container-report{
+         height: auto;
+         /*
+         display: block;
+         flex-direction: row;
+         justify-content: space-between;
+         background-color: #e7e7f7;
+         */
+         padding-bottom: 140px;
+         
+      }
+
+
+      #content-list {
+         display: flex;
+         flex-direction: row;
+         justify-content: space-around;
+         background-color: #52536d;
+         padding: 20px;
+      }
+
+
+
+      #title-list, #title-report {
+         text-align: center;       
+         color: antiquewhite;
+         font-size: 1.2rem;
+      }
+
+
+
+      #container-table {
+         display: flex;
+         flex-direction: column;
+         padding: 10px;
+         margin-bottom: 20px;
+      }
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+      #footer{
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         background-color: #9a9bb8;
+         padding: 20px
+      }
