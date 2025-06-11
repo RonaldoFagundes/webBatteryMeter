@@ -39,6 +39,46 @@ const btn_pdf_report = document.getElementById('pdf-report');
 
 
 
+
+
+const select_battery = document.getElementById('select-battery');
+
+/* 
+const languagesList = ["Ruby", "JavaScript", "Python", "GoLang"];
+
+languagesList.forEach((language) => {
+  option = new Option(language, language.toLowerCase());
+  select_battery.options[select_battery.options.length] = option;
+});
+ */
+
+const languagesList = {
+  ruby: "Ruby",
+  javascript: "JavaScript",
+  python: "Python",
+  golang: "GoLang"
+};
+
+for(language in languagesList) {
+  option = new Option(languagesList[language], language);
+  select_battery.options[select_battery.options.length] = option;  
+}
+
+//select_battery.options.length = 0;
+
+/*
+select_battery.addEventListener('click', function () {
+	console.log("opá");	 
+});
+*/
+
+
+
+
+
+
+
+
 btn_list.addEventListener('click', function () {
 	listBattery();	 
 });
@@ -216,13 +256,17 @@ const listBattery = async () => {
 				for (var i = 0; i < list_battery.length; i++) {
 
 
-                   if (list_battery[i].condutancia < 4000 ) {
-					 p_critical.innerHTML = `Critico ${list_battery[i].condutancia} id ${list_battery[i].id}`;
-					 p_critical.style.color = "orange";					
+                   if (list_battery[i].condutancia < 4200 && list_battery[i].condutancia > 3980 ) {
+					 p_critical.innerHTML = `Atenção ${list_battery[i].condutancia} id ${list_battery[i].id}`;
+					 p_critical.style.color = "yellow";					
+					 p_critical.style.backgroundColor = "gray";
+					 p_critical.style.padding = "10px";
                      console.log(`Condutancia ${list_battery[i].condutancia} id ${list_battery[i].id}`);
-                    }else if(list_battery[i].condutancia < 4100 ) {
-					 p_atention.innerHTML = `Atenção ${list_battery[i].condutancia} id ${list_battery[i].id}` ;
-					 p_atention.style.color = "yellow";
+                    }else if(list_battery[i].condutancia < 3980 ) {
+					 p_atention.innerHTML = `Critico ${list_battery[i].condutancia} id ${list_battery[i].id}` ;
+					 p_atention.style.color = "red";
+					 p_atention.style.backgroundColor = "gray";
+					 p_atention.style.padding = "10px";
                      console.log(`Condutancia ${list_battery[i].condutancia} id ${list_battery[i].id}`);
                     }
 
