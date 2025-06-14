@@ -4,7 +4,7 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Document</title>
+   <title>i9+ baterias</title>
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"
       integrity="sha512-MpDFIChbcXl2QgipQrt1VcPHMldRILetapBl5MPCA9Y8r7qvlwx1/Mc9hNTzY+kS5kX6PdoDq41ws1HiVNLdZA=="
@@ -13,157 +13,11 @@
 
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
    <script src="js/script.js" defer></script>
 
-   <style>
-
-       #header{        
-         text-align: center;
-         background-color: #45498d;
-         padding: 20px;
-         margin-bottom: 20px;
-       }
-
-
-       #header h1{
-          color: antiquewhite;
-       }
-
-
-
-       
-      #container-btn {
-         height: auto;         
-         display: flex;
-         flex-direction: row;
-         justify-content: space-between;
-         align-items: center;
-         background-color: #9a9bb8;
-         padding: 20px;
-         margin-bottom: 20px;
-      }
-
-
-      /*
-      #content-btn {
-         width: auto;
-         height: auto;
-         
-         display: flex;
-         flex-direction: row;
-         background-color: #eaeaf5;
-         justify-content: space-between;
-        
-        
-         padding: 5px;
-         border-radius: 8px;
-
-         background-color: #790606;
-      }
-      */
-
-      input,a{        
-         padding: 10px;
-         border: 2px solid #177283;
-         border-radius: 8px;
-         background-color: #d1c8f3;
-         color: #14121b;
-         cursor: pointer;
-         text-decoration: none;
-      }
-
-     /*
-      a{
-         padding: 10px;
-         border: 2px solid #177283;
-         border-radius: 8px;
-         background-color: #d1c8f3;
-         color: #14121b;
-         text-decoration: none;
-      }
-     */
-
-
-     #content-alert, #surch-report{
-         display: flex;
-         flex-direction: row;
-         justify-content: space-around;
-         background-color: #52536d;
-         padding: 20px;
-     }
-
-
-
-      #container-list{
-        height: auto;
-        padding-bottom: 140px;
-
-      }
-
-
-
-      #container-report{
-         height: auto;
-         /*
-         display: block;
-         flex-direction: row;
-         justify-content: space-between;
-         background-color: #e7e7f7;
-         */
-         padding-bottom: 140px;
-         
-      }
-
-
-      #content-list {
-         display: flex;
-         flex-direction: row;
-         justify-content: space-around;
-         background-color: #52536d;
-         padding: 20px;
-      }
-
-
-
-      #title-list, #title-report {
-         text-align: center;       
-         color: antiquewhite;
-         font-size: 1.2rem;
-      }
-
-
-
-      #container-table {
-         display: flex;
-         flex-direction: column;
-         padding: 10px;
-         margin-bottom: 20px;
-      }
-
-
-
-
-      
-
-
-
-
-
-
-
-
-
-      #footer{
-         display: flex;
-         flex-direction: row;
-         justify-content: space-between;
-         background-color: #9a9bb8;
-         padding: 20px
-      }
-
-
-   </style>
-
+   <link rel="stylesheet" href="css/style.css" />
 
 
 </head>
@@ -173,9 +27,9 @@
 
 
 
-  <div id="header">
+   <div id="header">
        <h1>I9+ Baterias</h1>
-  </div>
+   </div>
 
 
 
@@ -185,10 +39,12 @@
 
    <div id="container-btn">
           
-            <input type="button" value="List" id="list">              
+            <input type="button" value="List" id="list">  
+            
+            <input type="button" value="report" id="report">   
                      
-            <a href="#container-report">Relatórios</a>           
-
+            <a href="#container-report">Relatórios</a>            
+          
    </div>
 
 
@@ -198,14 +54,8 @@
 
 
    <div id="container-list">
-
-
-      <div id="content-list">
-
-
-         <div> 
-            <p id="title-list"></p>
-         </div>
+     
+      <div id="content-btn">       
 
          <div>        
             <input type="button" value="graph" id="graph">         
@@ -218,17 +68,12 @@
       </div>
 
 
+      <div id="content-alert"></div>
 
 
-      <div id="content-alert">
-            
-            <p id="p-atention"></p>
-            <p id="p-critical"></p>
-
+      <div> 
+         <p id="title-list"></p>
       </div>
-
-
-
 
 
       <div id="container-table">
@@ -244,6 +89,8 @@
                   <th>Condutância</th>
                   <th>Desvio</th>
                   <th>Obs</th>
+                  <th>Status</th>
+                  <th>Sign</th>
 
                </tr>
 
@@ -253,11 +100,11 @@
 
       </div>
 
-
       <div>
          <canvas id="myChart"></canvas>
       </div>
 
+   
 
    </div>
 
@@ -275,19 +122,20 @@
   <div id="container-report">
 
 
-   <div id="content-list">
+      <div id="content-btn">        
 
+         <select id="select-battery">
 
-        <div> 
-            <p id="title-report"></p>
-         </div>
+                 <option id="option-battery" value="" disabled selected>Choose your Battery</option>
 
+         </select>
 
+      <!-- 
          <div>            
              <input type="button" value="report" id="report">            
-         </div>           
-                
-
+         </div>    
+      -->
+         
          <div>            
              <input type="button" value="pdf-report" id="pdf-report">            
          </div>
@@ -297,29 +145,22 @@
 
 
 
-      <div id="surch-report" >
-
-
-               
-              <select id="select-battery">
-
-                 <option value="" disabled selected>Choose your Battery</option>
-
-              </select>
-
-
-
-
-              <input type="button" value="surch-last" id="surch-last"> 
+      <div id="surch-report" >             
+         
+              <input type="button" value="surch-last"   id="surch-last"> 
 
               <input type="button" value="surch-bigger" id="surch-bigger"> 
+
+              <input type="button" value="surch-ref" id="surch-ref"> 
                   
-              <input type="text"  value="surch-ref">
-           
+             <!--  <input type="text"  value="surch-ref">     -->      
 
       </div>
 
 
+      <div> 
+         <p id="title-report"></p>
+      </div>
 
 
       <div id="container-table">
