@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
+
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>i9+ baterias</title>
@@ -19,16 +21,15 @@
 
    <link rel="stylesheet" href="css/style.css" />
 
-
 </head>
+
 
 <body>
 
 
 
-
    <div id="header">
-       <h1>I9+ Baterias</h1>
+      <h1>I9+ Baterias</h1>
    </div>
 
 
@@ -36,15 +37,14 @@
 
 
 
-
    <div id="container-btn">
-          
-            <input type="button" value="List" id="list">  
-            
-            <input type="button" value="report" id="report">   
-                     
-            <a href="#container-report">Relatórios</a>            
-          
+
+      <input type="button" value="List" id="list">
+
+      <input type="button" value="report" id="report">
+
+      <a href="#container-report">Relatórios</a>      
+
    </div>
 
 
@@ -54,24 +54,98 @@
 
 
    <div id="container-list">
-     
-      <div id="content-btn">       
 
-         <div>        
-            <input type="button" value="graph" id="graph">         
+
+
+      <div id="content-btn">
+
+         <div>
+            <input type="button" value="graph" id="graph">
          </div>
 
-         <div>            
-             <input type="button" value="pdf" id="pdf">            
+         <div>
+            <input type="button" value="pdf" id="pdf">
          </div>
 
       </div>
 
 
-      <div id="content-alert"></div>
 
 
-      <div> 
+  
+     <div id="container-alert">
+
+
+
+          
+      <div id="search-battery">
+
+
+          <div>
+
+             <fieldset>
+
+                <legend>Filtros de busca:</legend>
+
+                <div>
+                 <input type="radio" id="bigger"  name="search" value="bigger" checked />
+                 <label for="bigger">Bigger</label>
+                </div>
+
+               <div>
+                 <input type="radio" id="last"   name="search" value="last" />
+                 <label for="last">Last</label>
+               </div>
+
+              <div>
+                <input type="radio" id="ref"    name="search" value="ref" />
+                <label for="ref">Ref</label>
+              </div>
+
+            </fieldset>
+
+
+          </div>
+
+
+
+         <div>
+
+           <i class="fa fa-search" aria-hidden="true"></i>
+           <input type="search" id="input-search-battery" placeholder="Search" />
+
+         </div>
+
+
+      </div>
+
+
+         <div id="warning-alert">
+       
+             <p id="p-atention">40%</p>
+             <p id="p-critical">60%</p>
+
+         </div>
+
+
+         <div id="ref-alert">
+       
+             <p>40%</p>
+             <p>60%</p>
+
+         </div>
+
+
+
+        <!--  <div id="content-alert"></div> -->
+
+     </div>
+
+
+
+
+
+      <div>
          <p id="title-list"></p>
       </div>
 
@@ -81,9 +155,7 @@
          <table id="table-list" border="1px" cellpadding="5px" cellspacing="0">
 
             <thead>
-
                <tr id="t-head">
-
                   <th>id</th>
                   <th>Tensão</th>
                   <th>Condutância</th>
@@ -91,20 +163,22 @@
                   <th>Obs</th>
                   <th>Status</th>
                   <th>Sign</th>
-
                </tr>
-
             </thead>
+
+            <tbody id="tbody-battery"></tbody>
 
          </table>
 
       </div>
 
+
+
       <div>
          <canvas id="myChart"></canvas>
       </div>
 
-   
+
 
    </div>
 
@@ -119,25 +193,22 @@
 
 
 
-  <div id="container-report">
+   <div id="container-report">
 
 
-      <div id="content-btn">        
+
+      <div id="content-btn">
+
 
          <select id="select-battery">
 
-                 <option id="option-battery" value="" disabled selected>Choose your Battery</option>
+            <option id="option-battery" value="" disabled selected>Choose your Battery</option>
 
          </select>
 
-      <!-- 
-         <div>            
-             <input type="button" value="report" id="report">            
-         </div>    
-      -->
-         
-         <div>            
-             <input type="button" value="pdf-report" id="pdf-report">            
+
+         <div>
+            <input type="button" value="pdf-report" id="pdf-report">
          </div>
 
 
@@ -145,32 +216,89 @@
 
 
 
-      <div id="surch-report" >             
+      <div id="search-report">
+
+
+         <div>
+
+            <fieldset>
+
+                <legend>Filtros de busca:</legend>
+
+                <div>
+                 <input type="radio" id="bigger"  name="search" value="bigger" checked />
+                 <label for="bigger">Bigger</label>
+                </div>
+
+               <div>
+                 <input type="radio" id="last"   name="search" value="last" />
+                 <label for="last">Last</label>
+               </div>
+
+              <div>
+                 <input type="radio" id="ref"    name="search" value="ref" />
+                 <label for="ref">Ref</label>
+               </div>
+
+            </fieldset>
+
+         </div>
+
+
+         <div>
+           <i class="fa fa-search" aria-hidden="true"></i>
+           <input type="search" id="input-search-analysis" placeholder="Search" />
+         </div>
          
-              <input type="button" value="surch-last"   id="surch-last"> 
 
-              <input type="button" value="surch-bigger" id="surch-bigger"> 
 
-              <input type="button" value="surch-ref" id="surch-ref"> 
-                  
-             <!--  <input type="text"  value="surch-ref">     -->      
 
+         <!--  
+           <input type="button" value="surch-last" id="surch-last">
+
+           <input type="button" value="surch-bigger" id="surch-bigger">
+
+           <input type="button" value="surch-ref" id="surch-ref"> 
+         
+         -->    
+
+         
       </div>
 
 
-      <div> 
+
+
+      <div>
          <p id="title-report"></p>
       </div>
 
 
-      <div id="container-table">
+      
 
-         <table id="table-report" border="1px" cellpadding="5px" cellspacing="0">
+      <div id="container-table">         
+          
+         <table id="table-report" border="1px" cellpadding="5px" cellspacing="0"> 
 
             <thead>
+              <tr>
+               <th>id</th>
+               <th>Tensão</th>
+               <th>Corrente</th>
+               <th>Temperatura</th>
+               <th>Obs</th>
+               <th>Date</th>
+               <th>Time</th>
+               <th>fk</th>
+              </tr>
+            </thead>
 
+           <!--  <tbody id="content-search"></tbody> -->
+            <tbody id="tbody-report"></tbody>
+
+            <!-- 
+
+            <thead>
                <tr id="t-head">
-
                   <th>id</th>
                   <th>Tensão</th>
                   <th>Corrente</th>
@@ -179,14 +307,73 @@
                   <th>Date</th>
                   <th>Time</th>
                   <th>fk</th>
-
                </tr>
-
             </thead>
-
+            
+            -->         
          </table>
 
+
+           
       </div>
+
+   </div>
+
+
+
+
+
+
+
+<!-- 
+
+   <div>
+      <i class="fa fa-search" aria-hidden="true"></i>
+      <input type="search" id="input-search" placeholder="Search" />
+
+    !-- 
+         <div id="header-search">
+          
+         <p style="width: 30px;">ID</p>
+         <p style="width: 70px;">Tensão</p>
+         <p style="width: 70px;">Corrente</p>
+         <p style="width: 70px;">Temperatura</p>
+         <p style="width: 100px;">Obs</p>
+         <p style="width: 100px;">Date</p>
+         <p style="width: 100px;">Time</p>
+         <p style="width: 30px;">FK</p>    
+
+         </div>
+      --
+
+      <table border="1px" cellpadding="10px" cellspacing="0">
+
+         <thead>
+
+            <tr>
+               <th>id</th>
+               <th>Tensão</th>
+               <th>Corrente</th>
+               <th>Temperatura</th>
+               <th>Obs</th>
+               <th>Date</th>
+               <th>Time</th>
+               <th>fk</th>
+            </tr>
+
+         </thead>
+
+         <tbody id="content-search"></tbody>
+
+      </table>
+   </div>
+
+ 
+ -->
+
+
+
+
 
 
    </div>
@@ -194,16 +381,10 @@
 
 
 
- 
 
-
-
-
-
-
- <div id="footer">
-     <h2>footer</h2>
- </div>
+   <div id="footer">
+      <h2>footer</h2>
+   </div>
 
 
 
