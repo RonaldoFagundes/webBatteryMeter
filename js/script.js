@@ -18,33 +18,18 @@ const btn_graph = document.getElementById('graph');
 const btn_pdf = document.getElementById('pdf');
 
 
-
 const select_battery = document.getElementById('select-battery');
 const btn_pdf_report = document.getElementById('pdf-report');
-
-
-
-
-//const btn_surch_last = document.getElementById('surch-last');
-//const btn_surch_ref = document.getElementById('surch-ref');
-
-
-
-
-
 
 
 const container_list = document.getElementById('container-list');
 
 const container_report = document.getElementById('container-report');
 
-//const content_alert = document.getElementById('content-alert');
 
 const p_atention = document.getElementById('p-atention');
 
 const p_critical = document.getElementById('p-critical');
-
-
 
 
 
@@ -67,25 +52,6 @@ const list_report = [];
 
 const label = [];
 const dataBattery = [];
-
-
-
-
-
-/*
-const analysi = {
-	fk: 1,
-	date: 5,
-};
-*/
-
-
-/*
-const dateReport = {
-	fk: 1,
-	date: 5,
-};
-*/
 
 
 
@@ -128,81 +94,10 @@ select_battery.onchange = function () {
 
 
 
-
-
 const input_search_battery = document.getElementById("input-search-battery");
-
-
-
-const input_search_analysis = document.getElementById("input-search-analysis");
-
-
-
-
-const tbody_report = document.getElementById("tbody-report");
-
-
-
+const radio_bigger = document.getElementById("radio-bigger");
+const radio_all_battery = document.getElementById("radio-all-battery");
 const tbody_battery = document.getElementById("tbody-battery");
-
-
-
-
-
-
-
-
-
-
-
-input_search_analysis.addEventListener("keyup",(e)=>{
-
-	const search = list_report.filter(i=> i.date.toLowerCase().includes(e.target.value.toLowerCase().replace(/[^0-9]/g, '')));
-	    
-	displayData(search);
-
-	//console.log(search);
-	
-})
-
-//window.addEventListener("load", displayData.bind(null, list_report));
-
-
-
-
-const displayData = list_report =>{
-
-   title_report.innerHTML ="List Analysis";
-
-   tbody_report.innerHTML ="";
-
-   list_report.forEach(e => {
-
-	 tbody_report.innerHTML += 
-	 `	
-	  <tbody>       
-	      <td data-title="ID"          style="width: auto;">${e.id}</td>
-	      <td data-title="Tensao"      style="width: auto;">${e.tensao}</td>
-	      <td data-title="Corrente"    style="width: auto;">${e.corrente}</td>
-	      <td data-title="Temperatura" style="width: auto;">${e.temperatura}º</td>
-	      <td data-title="Obs"         style="width: auto;">${e.obs}</td>
-	      <td data-title="Date"        style="width: auto;">${e.date}</td>
-	      <td data-title="Time"        style="width: auto;">${e.time}</td>
-	      <td data-title="FK"          style="width: auto;">${e.fk}</td>       
-	  </tbody>	
-	 `
-  })
-
-}
-
-
-
-
-
-
-
-
-
 
 
 input_search_battery.addEventListener("keyup",(e)=>{
@@ -218,13 +113,19 @@ input_search_battery.addEventListener("keyup",(e)=>{
 })
 
 
+radio_bigger.addEventListener("click",()=>{	
+	const search = list_battery.filter((i) =>
+      i.condutancia > 4000
+    );
+    displayListBattery(search);	
+})
+
+radio_all_battery.addEventListener("click",()=>{	
+	displayListBattery(list_battery);
+})
 
 
-
-
-
-
-
+/*
 const onLoadListBattery = () =>{
 
    title_list.innerHTML ="List Battery";
@@ -287,7 +188,7 @@ const onLoadListBattery = () =>{
   })
 
 }
-
+*/
 
 
 
@@ -300,13 +201,22 @@ const displayListBattery = list_battery =>{
 
    list_battery.forEach(e => {
 
-	let status = "";
+	label.push(e.id);
+	dataBattery.push((e.condutancia / 5000 * 100).toFixed(0));
+
+    let status = "";
 	let sign = "";       
 
 		if (e.condutancia <= 4000) {           
 			status = "red";
+			p_critical.innerHTML = `Critico ${e.condutancia} id ${e.id}`; 
+			p_critical.style.backgroundColor = "#757f81"; 
+			p_critical.style.color = "red";
 		}else if(e.condutancia > 4000 && e.condutancia <= 4200){
             status = "yellow";
+			p_atention.innerHTML = `Atenção ${e.condutancia} id ${e.id}`; 
+			p_atention.style.backgroundColor = "#757f81"; 
+			p_atention.style.color = "yellow";
 		}else{
 			status = "green";
 		}        
@@ -315,7 +225,8 @@ const displayListBattery = list_battery =>{
          sign = "gray"
 	   }else{
 		 sign = "green"
-	   }
+	   }  
+
 
 	 tbody_battery.innerHTML += 
 	 `	
@@ -343,9 +254,59 @@ const displayListBattery = list_battery =>{
 
 
 
+const input_search_analysis = document.getElementById("input-search-analysis");
+const radio_last = document.getElementById("radio-last");
+const radio_all_report = document.getElementById("radio-all-report");
+const tbody_report = document.getElementById("tbody-report");
 
 
 
+input_search_analysis.addEventListener("keyup",(e)=>{
+	const search = list_report.filter(i=> i.date.toLowerCase().includes(e.target.value.toLowerCase().replace(/[^0-9]/g, '')));
+	displayData(search);
+})
+
+//window.addEventListener("load", displayData.bind(null, list_report));
+
+radio_last.addEventListener("click",()=>{	
+	const search = list_report.slice(-1);    
+    displayData(search);
+})
+
+
+
+radio_all_report.addEventListener("click",()=>{	
+	displayData(list_report);
+})
+
+
+
+
+
+const displayData = list_report =>{
+
+   title_report.innerHTML ="List Analysis";
+
+   tbody_report.innerHTML ="";
+
+   list_report.forEach(e => {
+
+	 tbody_report.innerHTML += 
+	 `	
+	  <tbody>       
+	      <td data-title="ID"          style="width: auto;">${e.id}</td>
+	      <td data-title="Tensao"      style="width: auto;">${e.tensao}</td>
+	      <td data-title="Corrente"    style="width: auto;">${e.corrente}</td>
+	      <td data-title="Temperatura" style="width: auto;">${e.temperatura}º</td>
+	      <td data-title="Obs"         style="width: auto;">${e.obs}</td>
+	      <td data-title="Date"        style="width: auto;">${e.date}</td>
+	      <td data-title="Time"        style="width: auto;">${e.time}</td>
+	      <td data-title="FK"          style="width: auto;">${e.fk}</td>       
+	  </tbody>	
+	 `
+  })
+
+}
 
 
 
@@ -390,11 +351,6 @@ btn_pdf_report.addEventListener('click', function () {
 
 
 
-
-
-
-
-
 /*
 btn_surch_ref.onclick = function () {
 	Array.from(document.getElementById('table-report').tBodies).forEach((x, i) => {
@@ -403,9 +359,6 @@ btn_surch_ref.onclick = function () {
 	listReportByDate();
 }
 */
-
-
-
 
 
 /*
@@ -417,10 +370,6 @@ btn_surch_last.onclick = function () {
 	listLastReport();
 };
 */
-
-
-
-
 
 
 
@@ -464,18 +413,15 @@ const listBattery = async () => {
 					select_battery.options[select_battery.options.length] = option;
 				});
 
-				onLoadListBattery();
+				//onLoadListBattery();
 				//createTableList();
-
+                displayListBattery(list_battery);
 				
 
 			}
 		)
 
 };
-
-
-
 
 
 
@@ -514,11 +460,6 @@ function loadGraph() {
 	});
 
 }
-
-
-
-
-
 
 
 
@@ -596,6 +537,9 @@ const listReportByFk = async () => {
 	return list_report[0].fk;
 
 };
+
+
+
 
 
 

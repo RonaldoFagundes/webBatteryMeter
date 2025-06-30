@@ -29,7 +29,7 @@
 
 
    <div id="header">
-      <h1>I9+ Baterias</h1>
+      <h1>Analisador de Baterias Estacionárias</h1>
    </div>
 
 
@@ -43,7 +43,7 @@
 
       <input type="button" value="report" id="report">
 
-      <a href="#container-report">Relatórios</a>      
+      <a href="#container-report">Relatórios</a>
 
    </div>
 
@@ -53,95 +53,91 @@
 
 
 
-   <div id="container-list">
+   <div id="container-list">    
 
 
 
-      <div id="content-btn">
+      <div id="header-list">
 
-         <div>
-            <input type="button" value="graph" id="graph">
+
+         <div id="container-alert">
+
+
+            <div id="warning-alert">
+
+              <p id="p-atention">40%</p>
+              <p id="p-critical">60%</p>
+
+            </div>
+
+
+
+            <div id="ref-alert">
+
+              <p>40%</p>
+              <p>60%</p>
+
+            </div>
+
+
          </div>
 
-         <div>
-            <input type="button" value="pdf" id="pdf">
+
+
+
+         <div id="content-btn">
+
+            <div>
+               <input type="button" value="graph" id="graph">
+             </div>
+
+            <div>
+              <input type="button" value="pdf" id="pdf">
+            </div>
+
          </div>
+      
+
 
       </div>
 
 
 
-
-  
-     <div id="container-alert">
-
-
-
-          
       <div id="search-battery">
 
 
-          <div>
+            <div id="search-radio">
+               <fieldset>
 
-             <fieldset>
+                  <legend>Filtros de busca:</legend>
 
-                <legend>Filtros de busca:</legend>
+                  <div>
+                     <input type="radio" id="radio-all-battery" name="search-b" checked value="radio-all-battery" />
+                     <label for="radio-all-battery">All</label>
+                  </div>
 
-                <div>
-                 <input type="radio" id="bigger"  name="search" value="bigger" checked />
-                 <label for="bigger">Bigger</label>
-                </div>
+                  <div>
+                     <input type="radio" id="radio-bigger" name="search-b" value="radio-bigger" />
+                     <label for="radio-bigger">Bigger</label>
+                  </div>
 
-               <div>
-                 <input type="radio" id="last"   name="search" value="last" />
-                 <label for="last">Last</label>
-               </div>
+                  <div>
+                     <input type="radio" id="ref" name="search-b" value="ref" />
+                     <label for="ref">Ref Id</label>
+                  </div>
 
-              <div>
-                <input type="radio" id="ref"    name="search" value="ref" />
-                <label for="ref">Ref</label>
-              </div>
-
-            </fieldset>
-
-
-          </div>
+               </fieldset>
+            </div>
 
 
 
-         <div>
-
-           <i class="fa fa-search" aria-hidden="true"></i>
-           <input type="search" id="input-search-battery" placeholder="Search" />
-
-         </div>
+            <div id="search-input">
+               <i class="fa fa-search" aria-hidden="true"></i>
+               <input type="search" id="input-search-battery" placeholder="Search" />
+            </div>
 
 
       </div>
-
-
-         <div id="warning-alert">
-       
-             <p id="p-atention">40%</p>
-             <p id="p-critical">60%</p>
-
-         </div>
-
-
-         <div id="ref-alert">
-       
-             <p>40%</p>
-             <p>60%</p>
-
-         </div>
-
-
-
-        <!--  <div id="content-alert"></div> -->
-
-     </div>
-
-
 
 
 
@@ -173,17 +169,11 @@
       </div>
 
 
-
       <div>
          <canvas id="myChart"></canvas>
       </div>
 
-
-
    </div>
-
-
-
 
 
 
@@ -197,47 +187,47 @@
 
 
 
-      <div id="content-btn">
+      <div id="header-report">
 
 
-         <select id="select-battery">
+         <div id="content-btn">
 
-            <option id="option-battery" value="" disabled selected>Choose your Battery</option>
+            <div>
+               <select id="select-battery">
+                 <option id="option-battery" value="" disabled selected>Choose your Battery</option>
+               </select>
+            </div>
 
-         </select>
+           <div>
+              <input type="button" value="pdf-report" id="pdf-report">
+           </div>
 
-
-         <div>
-            <input type="button" value="pdf-report" id="pdf-report">
          </div>
-
 
       </div>
 
 
-
       <div id="search-report">
 
-
-         <div>
+         <div id="search-radio">
 
             <fieldset>
 
-                <legend>Filtros de busca:</legend>
-
-                <div>
-                 <input type="radio" id="bigger"  name="search" value="bigger" checked />
-                 <label for="bigger">Bigger</label>
-                </div>
+               <legend>Filtros de busca:</legend>
 
                <div>
-                 <input type="radio" id="last"   name="search" value="last" />
-                 <label for="last">Last</label>
+                  <input type="radio" id="radio-all-report" name="search" checked value="radio-all-report" />
+                  <label for="radio-all-report">All</label>
                </div>
 
-              <div>
-                 <input type="radio" id="ref"    name="search" value="ref" />
-                 <label for="ref">Ref</label>
+               <div>
+                  <input type="radio" id="radio-last" name="search" value="last" />
+                  <label for="last">Last</label>
+               </div>
+
+               <div>
+                  <input type="radio" id="ref" name="search" value="ref" />
+                  <label for="ref">Ref Date</label>
                </div>
 
             </fieldset>
@@ -245,26 +235,12 @@
          </div>
 
 
-         <div>
-           <i class="fa fa-search" aria-hidden="true"></i>
-           <input type="search" id="input-search-analysis" placeholder="Search" />
+         <div id="search-input">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input type="search" id="input-search-analysis" placeholder="Search" />
          </div>
-         
 
-
-
-         <!--  
-           <input type="button" value="surch-last" id="surch-last">
-
-           <input type="button" value="surch-bigger" id="surch-bigger">
-
-           <input type="button" value="surch-ref" id="surch-ref"> 
-         
-         -->    
-
-         
       </div>
-
 
 
 
@@ -273,26 +249,25 @@
       </div>
 
 
-      
 
-      <div id="container-table">         
-          
-         <table id="table-report" border="1px" cellpadding="5px" cellspacing="0"> 
+      <div id="container-table">
+
+         <table id="table-report" border="1px" cellpadding="5px" cellspacing="0">
 
             <thead>
-              <tr>
-               <th>id</th>
-               <th>Tensão</th>
-               <th>Corrente</th>
-               <th>Temperatura</th>
-               <th>Obs</th>
-               <th>Date</th>
-               <th>Time</th>
-               <th>fk</th>
-              </tr>
+               <tr>
+                  <th>id</th>
+                  <th>Tensão</th>
+                  <th>Corrente</th>
+                  <th>Temperatura</th>
+                  <th>Obs</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>fk</th>
+               </tr>
             </thead>
 
-           <!--  <tbody id="content-search"></tbody> -->
+            <!--  <tbody id="content-search"></tbody> -->
             <tbody id="tbody-report"></tbody>
 
             <!-- 
@@ -310,11 +285,9 @@
                </tr>
             </thead>
             
-            -->         
+            -->
          </table>
 
-
-           
       </div>
 
    </div>
@@ -322,11 +295,7 @@
 
 
 
-
-
-
-<!-- 
-
+   <!-- 
    <div>
       <i class="fa fa-search" aria-hidden="true"></i>
       <input type="search" id="input-search" placeholder="Search" />
@@ -366,17 +335,12 @@
          <tbody id="content-search"></tbody>
 
       </table>
-   </div>
-
- 
+   </div> 
  -->
 
 
 
 
-
-
-   </div>
 
 
 
