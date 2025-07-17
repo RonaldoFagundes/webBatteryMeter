@@ -309,7 +309,8 @@
   #footer {
      display: flex;
      flex-direction: row;
-     justify-content: space-between;
+     align-items: center;
+     justify-content: center;
      background-color: #579f79;
      padding: 20px;
   }

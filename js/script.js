@@ -4,49 +4,64 @@
 const endpoint = "http://localhost:3322";
 
 
+var dta = new Date();
+var hours = dta.getHours();
+var dd = dta.getDate().toString().padStart(2, '0');
+var mm = (dta.getMonth() + 1).toString().padStart(2, '0');
+var yyyy = dta.getFullYear();
+//var today = dd + "/" + mm + "/" + yyyy;
+var today = yyyy + "-" + mm + "-" + dd;
 
 
 var fkStation = '';
+
+var ref = 3989;
+const lastUpdate = 50;
 
 
 const btn_list = document.getElementById('list');
 const btn_report = document.getElementById('report');
 
-
 const btn_graph = document.getElementById('graph');
 const btn_pdf = document.getElementById('pdf');
-
 
 const select_battery = document.getElementById('select-battery');
 const btn_pdf_report = document.getElementById('pdf-report');
 
-
 const container_list = document.getElementById('container-list');
 const container_report = document.getElementById('container-report');
-
 
 const p_atention = document.getElementById('p-atention');
 const p_critical = document.getElementById('p-critical');
 
-
-
 const title_list = document.getElementById('title-list');
 const title_report = document.getElementById('title-report');
-
-
-
 
 const table_list = document.getElementById('table-list');
 const table_report = document.getElementById('table-report');
 
+const radio_worst = document.getElementById("radio-worst");
+const radio_all_battery = document.getElementById("radio-all-battery");
+const radio_ref_id = document.getElementById("radio-ref-id");
+const input_search_battery = document.getElementById("input-search-battery");
 
+const radio_last = document.getElementById("radio-last");
+const radio_all_report = document.getElementById("radio-all-report");
+const radio_ref_date = document.getElementById("radio-ref-date");
+const input_search_analysis = document.getElementById("input-search-analysis");
+
+const tbody_report = document.getElementById("tbody-report");
+const tbody_battery = document.getElementById("tbody-battery");
 
 const list_battery = [];
 const list_report = [];
 
-
 const label = [];
 const dataBattery = [];
+
+
+
+
 
 
 
@@ -64,7 +79,6 @@ btn_list.addEventListener('click', function () {
 	input_search_analysis.style.opacity = "0.33"
 
 });
-
 
 
 
@@ -100,31 +114,48 @@ select_battery.onchange = function () {
 
 
 
-const radio_ref_id = document.getElementById("radio-ref-id");
-radio_ref_id.addEventListener("click", () => {
 
+radio_ref_id.addEventListener("click", () => {
 	input_search_battery.disabled = false;
 	input_search_battery.style.opacity = "1"
 })
 
+radio_worst.addEventListener("click", () => {
+	input_search_battery.disabled = true;
+	input_search_battery.style.opacity = "0.33"
+})
 
-
-
-const radio_ref_date = document.getElementById("radio-ref-date");
-radio_ref_date.addEventListener("click", () => {
-
-	input_search_analysis.disabled = false;
-	input_search_analysis.style.opacity = "1"
+radio_all_battery.addEventListener("click", () => {
+	input_search_battery.disabled = true;
+	input_search_battery.style.opacity = "0.33"
 })
 
 
 
 
 
-const input_search_battery = document.getElementById("input-search-battery");
-const radio_worst = document.getElementById("radio-worst");
-const radio_all_battery = document.getElementById("radio-all-battery");
-const tbody_battery = document.getElementById("tbody-battery");
+
+
+radio_ref_date.addEventListener("click", () => {
+	input_search_analysis.disabled = false;
+	input_search_analysis.style.opacity = "1"
+})
+
+radio_last.addEventListener("click", () => {
+	input_search_analysis.disabled = true;
+	input_search_analysis.style.opacity = "0.33"
+})
+
+radio_all_report.addEventListener("click", () => {
+	input_search_analysis.disabled = true;
+	input_search_analysis.style.opacity = "0.33"
+})
+
+
+
+
+
+
 
 input_search_battery.addEventListener("keyup", (e) => {
 
@@ -141,7 +172,10 @@ input_search_battery.addEventListener("keyup", (e) => {
 
 radio_worst.addEventListener("click", () => {
 	const search = list_battery.filter((i) =>
-		i.condutancia < 3989
+
+		//i.condutancia < 3989
+		(((i.condutancia - ref) / ref) * 100).toFixed(0) <= -20
+
 	);
 	displayListBattery(search);
 })
@@ -155,6 +189,23 @@ radio_all_battery.addEventListener("click", () => {
 
 
 
+const getDiffInDays=(date)=> {
+
+	let lastRead = new Date(date);
+	let dlastRead = lastRead.getDate().toString().padStart(2, '0');
+	let mlastRead = (lastRead.getMonth() + 1).toString().padStart(2, '0');
+	let ylastRead = lastRead.getFullYear();
+	let lastReadf = ylastRead + "-" + mlastRead + "-" + dlastRead;
+
+	let diffInMs = new Date(today) - new Date(lastReadf)
+	let diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+	return diffInDays;
+}
+
+
+
+
 
 
 const displayListBattery = list_battery => {
@@ -163,33 +214,30 @@ const displayListBattery = list_battery => {
 
 	tbody_battery.innerHTML = "";
 
-
 	list_battery.forEach(e => {
 
 		let status = "";
 		let sign = "";
 
-		let ref = 3989;
 		let dif = e.condutancia - ref;
 		let desvio = (dif / ref * 100).toFixed(0);
 
+		// console.log(e.condutancia + " " + percent + "%"); 
 
-        // console.log(e.condutancia + " " + percent + "%"); 
+		if (desvio >= 0) {
+			status = "green";
 
-        if (desvio >= -21 && desvio <= -20) {
+		} else if (desvio >= -21 && desvio <= -20) {
 			//console.log(" Atenção " + percent);
 			status = "yellow";
-			p_atention.innerHTML = `${desvio}%  id ${e.id}`;			
-			p_atention.style.color = "yellow";			
-		
+			p_atention.innerHTML = `${desvio}%  id ${e.id}`;
+			p_atention.style.color = "yellow";
+
 		} else if (desvio >= -45 && desvio <= -44) {
 			//console.log(" Critico " + percent);
 			status = "red";
 			p_critical.innerHTML = `${desvio}%  id ${e.id}`;
 			p_critical.style.color = "#871409";
-
-		}else {
-			status = "green";
 		}
 
 
@@ -198,36 +246,59 @@ const displayListBattery = list_battery => {
 		dataBattery.push(desvio);
 
 
-       /*
-		if (e.condutancia <= 4000) {
-			status = "red";
-			p_critical.innerHTML = `${(e.condutancia / 5000 * 100).toFixed(0)}%  id ${e.id}`;
-			//p_critical.style.backgroundColor = "#748181"; 
-			p_critical.style.color = "#871409";
-			//p_critical.style.width = "40%";			
-			//p_critical.style.width = "auto";		
+		/*
+		 if (e.condutancia <= 4000) {
+			 status = "red";
+			 p_critical.innerHTML = `${(e.condutancia / 5000 * 100).toFixed(0)}%  id ${e.id}`;
+			 //p_critical.style.backgroundColor = "#748181"; 
+			 p_critical.style.color = "#871409";
+			 //p_critical.style.width = "40%";			
+			 //p_critical.style.width = "auto";		
+ 
+		 } else if (e.condutancia > 4000 && e.condutancia <= 4200) {
+			 status = "yellow";
+			 p_atention.innerHTML = `${(e.condutancia / 5000 * 100).toFixed(0)}%  id ${e.id}`;
+			 //p_atention.style.backgroundColor = "#748181"; 
+			 p_atention.style.color = "yellow";
+			 //p_atention.style.width = "40%";
+			 //p_atention.style.width = "auto";
+		 } else {
+			 status = "green";
+		 }
+		 */
 
-		} else if (e.condutancia > 4000 && e.condutancia <= 4200) {
-			status = "yellow";
-			p_atention.innerHTML = `${(e.condutancia / 5000 * 100).toFixed(0)}%  id ${e.id}`;
-			//p_atention.style.backgroundColor = "#748181"; 
-			p_atention.style.color = "yellow";
-			//p_atention.style.width = "40%";
-			//p_atention.style.width = "auto";
-		} else {
-			status = "green";
-		}
-        */
+
+		//if(moment('2015-05-12').isAfter('2015-05-01'))
+		// <script src='http://momentjs.com/downloads/moment.min.js'></script>
+
+		/*  
+		let lastRead = new Date(e.update);       
+	
+		let dlastRead = lastRead.getDate().toString().padStart(2, '0');
+		let mlastRead = (lastRead.getMonth() + 1).toString().padStart(2, '0');
+		let ylastRead = lastRead.getFullYear();
+		let lastReadf = ylastRead+"-"+mlastRead+"-"+dlastRead;
+			
+			const diffInMs   = new Date(today) - new Date(lastReadf)
+			const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+			
+			console.log(diffInDays);     
+				    
+			if (diffInDays >= lastUpdate) {
+				sign = "green"
+			} else {
+				sign = "gray"
+			}
+		*/
 
 
-		if (e.id < 2) {
+		if (getDiffInDays(e.update) >= lastUpdate) {
 			sign = "gray"
 		} else {
 			sign = "green"
 		}
 
-
-	  tbody_battery.innerHTML +=
+		tbody_battery.innerHTML +=
 			`	
 	  <tbody>       
 	      <td data-title="ID">${e.id}</td>
@@ -254,35 +325,27 @@ const displayListBattery = list_battery => {
 
 
 
-
-const input_search_analysis = document.getElementById("input-search-analysis");
-const radio_last = document.getElementById("radio-last");
-const radio_all_report = document.getElementById("radio-all-report");
-const tbody_report = document.getElementById("tbody-report");
-
-
-
 input_search_analysis.addEventListener("keyup", (e) => {
 	const search = list_report.filter(i => i.date.toLowerCase().includes(e.target.value.toLowerCase().replace(/[^0-9]/g, '')));
-	displayData(search);
+	displayReport(search);
 })
 
 //window.addEventListener("load", displayData.bind(null, list_report));
 
 radio_last.addEventListener("click", () => {
 	const search = list_report.slice(-1);
-	displayData(search);
+	displayReport(search);
 })
 
 
 radio_all_report.addEventListener("click", () => {
-	displayData(list_report);
+	displayReport(list_report);
 })
 
 
 
 
-const displayData = list_report => {
+const displayReport = list_report => {
 
 	title_report.innerHTML = "List Analysis";
 
@@ -396,9 +459,9 @@ const listBattery = async () => {
 							{
 								id: item.id_bty,
 								tensao: item.tensao_bty,
-								condutancia: item.condutancia_bty,
-								desvio: item.desvio_bty,
+								condutancia: item.condutancia_bty,								
 								obs: item.obs_bty,
+								update: item.update_bty
 							}
 
 						)
@@ -424,81 +487,69 @@ const listBattery = async () => {
 
 
 
- 
 
-        
 
- function lineGraph() {
 
-   const ctx = document.getElementById('myChart');
 
-   var graph = Chart.getChart("graph");
+const lineGraph=()=>{
+
+	const ctx = document.getElementById('myChart');
+
+	var graph = Chart.getChart("graph");
 
 	if (graph) {
 		graph.detroy();
 	}
 
-   graph = new Chart(ctx, {
+	graph = new Chart(ctx, {
 		type: 'line',
 		data: {
 			labels: label,
 			datasets: [{
 				label: '% desvio',
 				data: dataBattery,
-
 				borderWidth: 2,
 				borderColor: '#579f79',
-				backgroundColor:'transparent',
-				
-
+				backgroundColor: 'transparent',
 			}]
 		},
-		options: {  
+		options: {
 
 			scales: {
-
 				y: {
 					beginAtZero: true,
-
-			    	grid: {
-                      color: 'rgba(0, 0, 0, 0.3)',
-                    },
-
-                    ticks: {
-                      color: 'black' ,
-					    font: {
-                         size: 12,  
-                         weight: 'bold' 
-                        },
-                    }
-
+					grid: {
+						color: 'rgba(0, 0, 0, 0.3)',
+					},
+					ticks: {
+						color: 'black',
+						font: {
+							size: 12,
+							weight: 'bold'
+						},
+					}
 				},
-
 
 				x: {
 					beginAtZero: true,
-
-			    	grid: {
-                      color: 'rgba(0, 0, 0, 0.1)'					  
-                    },
-
-                    ticks: {
-                        color: 'black' ,
-					    font: {
-                         size: 12,   
-                         weight: 'bold' 
-                        },
-                    }
-
+					grid: {
+						color: 'rgba(0, 0, 0, 0.1)'
+					},
+					ticks: {
+						color: 'black',
+						font: {
+							size: 12,
+							weight: 'bold'
+						},
+					}
 				}
-
 
 			},
 		},
 
 	});
-	
- }
+
+}
 
 
 
@@ -509,7 +560,7 @@ const listBattery = async () => {
 
 
 
-
+/*
 function loadGraph() {
 
 	const ctx = document.getElementById('myChart');
@@ -541,7 +592,7 @@ function loadGraph() {
 	});
 
 }
-
+*/
 
 
 
@@ -591,11 +642,9 @@ const listReportByFk = async () => {
 								}
 
 							)
-
 					)
 
 					//createTableReport();
-
 
 				} else {
 
@@ -611,12 +660,9 @@ const listReportByFk = async () => {
 			}
 		)
 
-	displayData(list_report);
-
+	displayReport(list_report);
 	//console.log("return " + list_report[0].fk);
-
 	return list_report[0].fk;
-
 };
 
 
