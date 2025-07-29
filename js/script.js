@@ -16,7 +16,7 @@ var today = yyyy + "-" + mm + "-" + dd;
 var fkStation = '';
 
 var ref = 3989;
-const lastUpdate = 50;
+const lastUpdate = 7;
 
 
 const btn_list = document.getElementById('list');
@@ -224,21 +224,26 @@ const displayListBattery = list_battery => {
 
 		// console.log(e.condutancia + " " + percent + "%"); 
 
-		if (desvio >= 0) {
+		 console.log(desvio); 
+
+
+
+		if (desvio > -20) {
 			status = "green";
 
-		} else if (desvio >= -21 && desvio <= -20) {
+		} else if (desvio <= -20 & desvio > -45   ) {
 			//console.log(" Atenção " + percent);
 			status = "yellow";
 			p_atention.innerHTML = `${desvio}%  id ${e.id}`;
 			p_atention.style.color = "yellow";
 
-		} else if (desvio >= -45 && desvio <= -44) {
+		} else if (desvio <= -45) {
 			//console.log(" Critico " + percent);
 			status = "red";
 			p_critical.innerHTML = `${desvio}%  id ${e.id}`;
 			p_critical.style.color = "#871409";
 		}
+
 
 
 		label.push(e.id);
@@ -522,6 +527,11 @@ const lineGraph=()=>{
 						color: 'rgba(0, 0, 0, 0.3)',
 					},
 					ticks: {
+
+						callback: function(value) {
+                        return value + '%'; 
+                        },
+
 						color: 'black',
 						font: {
 							size: 12,
